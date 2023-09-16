@@ -60,21 +60,15 @@ int print_string(va_list agrument, format_fg *flagPar)
 
 	if (flagPar->minus)
 	{
-		if (flagPar->precision != UINT_MAX)
-			for (i = 0; i < precision; i++)
-				counter += _putchar(*s++);
-		else
-			counter += _puts(s);
+		for (i = 0; i < precision; i++)
+			counter += _putchar(*s++);
 	}
 	while (j++ < flagPar->width)
 		counter += _putchar(' ');
 	if (!flagPar->minus)
 	{
-		if (flagPar->precision != UINT_MAX)
-			for (i = 0; i < precision; i++)
-				counter += _putchar(*s++);
-		else
-			counter += _puts(s);
+		for (i = 0; i < precision; i++)
+			counter += _putchar(*s++);
 	}
 	return (counter);
 }
