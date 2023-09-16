@@ -7,21 +7,30 @@
  * @flags: argument flags
  * Return: result in string
  */
-char *convert(long int number, int base, int flags)
+char *convert(long int num, int base, int flags)
 {
-	char *array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	static char buffer[25];
-	unsigned long num = flags & UNSIGNED && number < 0 ? -number : number;
-	char sign = flags & UNSIGNED && number < 0 ? '-' : 0;
-	char *current;
+	static char *array;
+	static char buffer[50];
+	char sign = 0;
+	char *ptr;
+	unsigned long n = num;
 
-	current = &buffer[24];
-	*current = '\0';
+	if (!(flags & UNSIGNED) && num < 0)
+	{
+		n = -num;
+		sign = '-';
+
+	}
+	array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buffer[49];
+	*ptr = '\0';
+
 	do	{
-		*--current = array[num % base];
-		num /= base;
-	} while (num != 0);
+		*--ptr = array[n % base];
+		n /= base;
+	} while (n != 0);
+
 	if (sign)
-		*--current = sign;
-	return (current);
+		*--ptr = sign;
+	return (ptr);
 }
