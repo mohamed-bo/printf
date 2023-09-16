@@ -48,22 +48,22 @@ int print_int(va_list agrument, format_fg *flagPar)
 int print_string(va_list agrument, format_fg *flagPar)
 {
 	char *s = va_arg(agrument, char *);
-	unsigned int precision, counter = 0, i = 0, j;
+	unsigned int precision, counter = 0, i = 0, width;
 
 	(void)flagPar;
 	if ((int)(!s))
 		s = "(null)";
 
-	j = precision = _strlen(s);
+	width = precision = _strlen(s);
 	if (flagPar->precision < precision)
-		j = precision = flagPar->precision;
+		width = precision = flagPar->precision;
 
 	if (flagPar->minus)
 	{
 		for (i = 0; i < precision; i++)
 			counter += _putchar(*s++);
 	}
-	while (j++ < flagPar->width)
+	while (width++ < flagPar->width)
 		counter += _putchar(' ');
 	if (!flagPar->minus)
 	{

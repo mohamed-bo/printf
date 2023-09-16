@@ -55,7 +55,7 @@ typedef struct specifier
 } format_specifier;
 
 /* _put.c module */
-int _puts(char *str);
+int _putString(char *str);
 int _putchar(int c);
 
 /* convert_number.c module */

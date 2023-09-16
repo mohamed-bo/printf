@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- * _puts - prints a string
+ * _putString - prints a string
  * @s: the string to print
  * Return: number of char printed
  */
-int _puts(char *s)
+int _putString(char *s)
 {
 	char *begin = s;
 
