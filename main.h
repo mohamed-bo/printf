@@ -92,8 +92,8 @@ int printRange(char *begin, char *stop, char *except);
 int print_rev(va_list agrument, format_fg *flagPar);
 int print_rot13(va_list agrument, format_fg *flagPar);
 int print_number(char *str, format_fg *flagPar);
-int print_number_right_shift(char *str, format_fg *flagPar);
-int print_number_left_shift(char *str, format_fg *flagPar);
+int handle_non_minus_flags(char *str, format_fg *flagPar);
+int normal_print(char *str, format_fg *flagPar);
 
 /* _prinf.c module */
 int _printf(const char *format, ...);
