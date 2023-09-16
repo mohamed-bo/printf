@@ -4,7 +4,7 @@
  * init_params - clear the paramter and reset buffer
  * @flagPar: the parameter of format
  */
-void init_params(format_fg *flagPar)
+void init_params(format_fg *flagPar, va_list agruments)
 {
 	flagPar->unsign = 0;
 
@@ -20,6 +20,7 @@ void init_params(format_fg *flagPar)
 	flagPar->h_mod = 0;
 	flagPar->l_mod = 0;
 	flagPar->specifier = NULL;
+	(void)agruments;
 }
 
 /**

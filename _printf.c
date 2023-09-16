@@ -20,7 +20,7 @@ int _printf(const char *format, ...)
 		return (-1);
 	for (; *format_c; format_c++)
 	{
-		init_params(&flagPar);
+		init_params(&flagPar, agruments);
 		if (*format_c != '%')
 		{
 			counter += _putchar(*format_c);

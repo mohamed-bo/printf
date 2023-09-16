@@ -69,7 +69,7 @@ int print_HEX(va_list agrument, format_fg *flagPar);
 char *convert(long int num, int base, int flags);
 
 /* flag.c module */
-void init_params(format_fg *flagPar);
+void init_params(format_fg *flagPar, va_list agruments);
 char *get_flag_param(char *s, format_fg *flagPar, va_list agruments);
 int get_flag(char *s, format_fg *flagPar);
 char *get_width(char *s, format_fg *flagPar, va_list agrument);
