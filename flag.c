@@ -3,7 +3,6 @@
 /**
  * init_params - clear the paramter and reset buffer
  * @flagPar: the parameter of format
- * @agrument: the argument pointer
  */
 void init_params(format_fg *flagPar)
 {
@@ -27,20 +26,20 @@ void init_params(format_fg *flagPar)
  * get_flag_param - set the paramter of flag
  * @s: the format string
  * @flagPar: the parameter of format
- * @agrument: the argument pointer
+ * @agruments: the argument pointer
  * Return: current s pointer
  */
 char *get_flag_param(char *s, format_fg *flagPar, va_list agruments)
 {
 	while (get_flag(s, flagPar))
-			{
-				s++;
-			}
+	{
+		s++;
+	}
 	s = get_width(s, flagPar, agruments);
 	s = get_precision(s, flagPar, agruments);
 	s = get_modifier(s, flagPar);
 	get_specifier(s, flagPar);
-	return(s);
+	return (s);
 }
 
 
@@ -74,7 +73,6 @@ int get_flag(char *s, format_fg *flagPar)
 	}
 	return (isFlag);
 }
-
 
 /**
  * get_width - gets the width
@@ -127,64 +125,4 @@ char *get_precision(char *s, format_fg *flagPar, va_list agrument)
 	}
 	flagPar->precision = precision;
 	return (s);
-}
-
-/**
- * get_modifier - get the modifier type
- * @s: the format string
- * @flagPar: the parameter of format
- * Return: current s pointer
- */
-char *get_modifier(char *s, format_fg *flagPar)
-{
-	switch (*s)
-	{
-	case 'h':
-		flagPar->h_mod = 1;
-		s++;
-		break;
-	case 'l':
-		flagPar->l_mod = 1;
-		s++;
-		break;
-	}
-	return (s);
-}
-
-/**
- * get_specifier - get the type of specifier
- * @s: the format string
- * Return: 1 if there format
- * else 0
- */
-int get_specifier(char *s, format_fg *flagPar)
-{
-	format_specifier specifiers[] = {
-		{"c", print_char},
-		{"s", print_string},
-		{"%", print_percent},
-		{"d", print_int},
-		{"i", print_int},
-		{"b", print_bin},
-		{"o", print_oct},
-		{"x", print_hex},
-		{"X", print_HEX},
-		{"u", print_unsigned},
-		{"p", print_address},
-		{"r", print_rev},
-		{"R", print_rot13},
-		{"S", print_stringNonPrintable},
-		{NULL, NULL}
-	};
-	int i = 0;
-	while (specifiers[i].specifier)
-	{
-		if (*s == specifiers[i].specifier[0])
-		{
-			(*flagPar).specifier = specifiers[i].func;
-			return (1);
-		}
-		i++;
-	}
-	return (0);
 }
