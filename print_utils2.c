@@ -38,32 +38,33 @@ int print_number(char *s, format_fg *flagPar)
  */
 int print_number_right_shift(char *s, format_fg *flagPar)
 {
-	unsigned int n = 0, isNegative, i = _strlen(s);
-	char paddingChar = flagPar->zero ? '0' : ' ';
-	unsigned int signn;
+	unsigned int n = 0, neg, neg2, i = _strlen(s);
+	char pad_char = ' ';
 
-	signn = isNegative = (!flagPar->unsign && *s == '-');
-	if (signn && i < flagPar->width && flagPar->zero)
+	if (flagPar->zero && !flagPar->minus)
+		pad_char = '0';
+	neg = neg2 = (!flagPar->unsign && *s == '-');
+	if (neg && i < flagPar->width && pad_char == '0' && !flagPar->minus)
 		s++;
 	else
-		signn = 0;
-	if ((flagPar->plus && !isNegative) ||
-		(!flagPar->plus && flagPar->space && !isNegative))
+		neg = 0;
+	if ((flagPar->plus && !neg2) ||
+		(!flagPar->plus && flagPar->space && !neg2))
 		i++;
-	if (signn && flagPar->zero)
+	if (neg && pad_char == '0')
 		n += _putchar('-');
-	if (flagPar->plus && !isNegative && flagPar->zero && !flagPar->unsign)
+	if (flagPar->plus && !neg2 && pad_char == '0' && !flagPar->unsign)
 		n += _putchar('+');
-	else if (!flagPar->plus && flagPar->space && !isNegative &&
+	else if (!flagPar->plus && flagPar->space && !neg2 &&
 		!flagPar->unsign && flagPar->zero)
 		n += _putchar(' ');
 	while (i++ < flagPar->width)
-		n += _putchar(paddingChar);
-	if (signn && !flagPar->zero)
+		n += _putchar(pad_char);
+	if (neg && pad_char == ' ')
 		n += _putchar('-');
-	if (flagPar->plus && !isNegative && !flagPar->zero && !flagPar->unsign)
+	if (flagPar->plus && !neg2 && pad_char == ' ' && !flagPar->unsign)
 		n += _putchar('+');
-	else if (!flagPar->plus && flagPar->space && !isNegative &&
+	else if (!flagPar->plus && flagPar->space && !neg2 &&
 		!flagPar->unsign && !flagPar->zero)
 		n += _putchar(' ');
 	n += _puts(s);
@@ -78,15 +79,23 @@ int print_number_right_shift(char *s, format_fg *flagPar)
  */
 int print_number_left_shift(char *s, format_fg *flagPar)
 {
-	unsigned int n = 0, isNegative, i = _strlen(s);
+	unsigned int n = 0, neg, neg2, i = _strlen(s);
+	char pad_char = ' ';
 
-	isNegative = (!flagPar->unsign && *s == '-');
-	if (flagPar->plus && !isNegative && !flagPar->unsign)
+	if (flagPar->zero && !flagPar->minus)
+		pad_char = '0';
+	neg = neg2 = (!flagPar->unsign && *s == '-');
+	if (neg && i < flagPar->width && pad_char == '0' && !flagPar->minus)
+		s++;
+	else
+		neg = 0;
+
+	if (flagPar->plus && !neg2 && !flagPar->unsign)
 		n += _putchar('+'), i++;
-	else if (flagPar->space && !isNegative && !flagPar->unsign)
+	else if (flagPar->space && !neg2 && !flagPar->unsign)
 		n += _putchar(' '), i++;
 	n += _puts(s);
 	while (i++ < flagPar->width)
-		n += _putchar(' ');
+		n += _putchar(pad_char);
 	return (n);
 }
