@@ -1,43 +1,50 @@
 #include "main.h"
 
 /**
- * _printf - simulation of printf library in c
+ * _printf - prints anything
  * @format: the format string
- * Return: number of char printed using write
+ *
+ * Return: number of bytes printed
  */
 int _printf(const char *format, ...)
 {
-	int counter = 0;
-	va_list agruments;
-	char *begin;
-	char *format_c = (char *)format;
+	int sum = 0;
+	va_list ap;
+	char *p, *start;
+	params_t params = PARAMS_INIT;
 
-	format_fg flagPar;
+	va_start(ap, format);
 
-	va_start(agruments, format);
-
-	if (!format)
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-	for (; *format_c; format_c++)
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = (char *)format; *p; p++)
 	{
-		init_params(&flagPar, agruments);
-		if (*format_c != '%')
+		init_params(&params, ap);
+		if (*p != '%')
 		{
-			counter += _putchar(*format_c);
+			sum += _putchar(*p);
+			continue;
 		}
+		start = p;
+		p++;
+		while (get_flag(p, &params)) /* while char at p is flag char */
+		{
+			p++; /* next char */
+		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+				params.l_modifier || params.h_modifier ? p - 1 : 0);
 		else
-		{
-			begin = format_c;
-			format_c++;
-			format_c = get_flag_param(format_c, &flagPar, agruments);
-			if (!flagPar.specifier)
-				counter += printRange(begin, format_c,
-										 flagPar.l_mod || flagPar.h_mod ? format_c - 1 : 0);
-			else
-				counter += flagPar.specifier(agruments, &flagPar);
-		}
+			sum += get_print_func(p, ap, &params);
 	}
 	_putchar(BUF_FLUSH);
-	va_end(agruments);
-	return (counter);
+	va_end(ap);
+	return (sum);
 }
+
