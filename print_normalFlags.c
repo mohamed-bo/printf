@@ -52,7 +52,7 @@ int print_string(va_list agrument, format_fg *flagPar)
 
 	(void)flagPar;
 	if ((int)(!s))
-			s = "(null)";
+		s = "(null)";
 
 	j = precision = _strlen(s);
 	if (flagPar->precision < precision)
