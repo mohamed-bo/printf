@@ -9,7 +9,7 @@
 int print_char(va_list agrument, format_fg *flagPar)
 {
 	unsigned int ch = va_arg(agrument, int);
-	unsigned int precision = 1, counter = 0;
+	unsigned int precision = 0, counter = 0;
 
 	if (flagPar->minus)
 		counter += _putchar(ch);
