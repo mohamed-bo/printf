@@ -51,6 +51,9 @@ int print_string(va_list agrument, format_fg *flagPar)
 	unsigned int precision, counter = 0, i = 0, j;
 
 	(void)flagPar;
+	if ((int)(!s))
+			s = "(null)";
+
 	j = precision = _strlen(s);
 	if (flagPar->precision < precision)
 		j = precision = flagPar->precision;
