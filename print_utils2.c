@@ -1,104 +1,92 @@
 #include "main.h"
 
 /**
- * print_number - prints a number with options
- * @str: the base number as a string
- * @params: the parameter struct
- *
- * Return: chars printed
+ * print_number - prints a number
+ * @s: the number
+ * @flagPar: the parameter of format
+ * Return: number of char printed
  */
-int print_number(char *str, format_fg *params)
+int print_number(char *s, format_fg *flagPar)
 {
-	unsigned int i = _strlen(str);
-	int neg = (!params->unsign && *str == '-');
+	unsigned int i = _strlen(s);
+	int signn = (!flagPar->unsign && *s == '-');
 
-	if (!params->precision && *str == '0' && !str[1])
-		str = "";
-	if (neg)
+	if (!flagPar->precision && *s == '0' && !s[1])
+		s = "";
+	if (signn)
 	{
-		str++;
+		s++;
 		i--;
 	}
-	if (params->precision != UINT_MAX)
-		while (i++ < params->precision)
-			*--str = '0';
-	if (neg)
-		*--str = '-';
+	if (flagPar->precision != UINT_MAX)
+		while (i++ < flagPar->precision)
+			*--s = '0';
+	if (signn)
+		*--s = '-';
 
-	if (!params->minus)
-		return (print_number_right_shift(str, params));
+	if (!flagPar->minus)
+		return (print_number_right_shift(s, flagPar));
 	else
-		return (print_number_left_shift(str, params));
+		return (print_number_left_shift(s, flagPar));
 }
 
 /**
- * print_number_right_shift - prints a number with options
- * @str: the base number as a string
- * @params: the parameter struct
- *
- * Return: chars printed
+ * print_number_right_shift - prints a number flag non minus
+ * @s: the number
+ * @flagPar: the parameter of format
+ * Return: number of char printed
  */
-int print_number_right_shift(char *str, format_fg *params)
+int print_number_right_shift(char *s, format_fg *flagPar)
 {
-	unsigned int n = 0, neg, neg2, i = _strlen(str);
-	char pad_char = ' ';
+	unsigned int n = 0, isNegative, i = _strlen(s);
+	char paddingChar = flagPar->zero ? '0' : ' ';
+	unsigned int signn;
 
-	if (params->zero && !params->minus)
-		pad_char = '0';
-	neg = neg2 = (!params->unsign && *str == '-');
-	if (neg && i < params->width && pad_char == '0' && !params->minus)
-		str++;
+	signn = isNegative = (!flagPar->unsign && *s == '-');
+	if (signn && i < flagPar->width && flagPar->zero)
+		s++;
 	else
-		neg = 0;
-	if ((params->plus && !neg2) ||
-		(!params->plus && params->space && !neg2))
+		signn = 0;
+	if ((flagPar->plus && !isNegative) ||
+		(!flagPar->plus && flagPar->space && !isNegative))
 		i++;
-	if (neg && pad_char == '0')
+	if (signn && flagPar->zero)
 		n += _putchar('-');
-	if (params->plus && !neg2 && pad_char == '0' && !params->unsign)
+	if (flagPar->plus && !isNegative && flagPar->zero && !flagPar->unsign)
 		n += _putchar('+');
-	else if (!params->plus && params->space && !neg2 &&
-		!params->unsign && params->zero)
+	else if (!flagPar->plus && flagPar->space && !isNegative &&
+		!flagPar->unsign && flagPar->zero)
 		n += _putchar(' ');
-	while (i++ < params->width)
-		n += _putchar(pad_char);
-	if (neg && pad_char == ' ')
+	while (i++ < flagPar->width)
+		n += _putchar(paddingChar);
+	if (signn && !flagPar->zero)
 		n += _putchar('-');
-	if (params->plus && !neg2 && pad_char == ' ' && !params->unsign)
+	if (flagPar->plus && !isNegative && !flagPar->zero && !flagPar->unsign)
 		n += _putchar('+');
-	else if (!params->plus && params->space && !neg2 &&
-		!params->unsign && !params->zero)
+	else if (!flagPar->plus && flagPar->space && !isNegative &&
+		!flagPar->unsign && !flagPar->zero)
 		n += _putchar(' ');
-	n += _puts(str);
+	n += _puts(s);
 	return (n);
 }
 
 /**
- * print_number_left_shift - prints a number with options
- * @str: the base number as a string
- * @params: the parameter struct
- *
- * Return: chars printed
+ * print_number_left_shift - prints a number flag minus
+ * @s: the number
+ * @flagPar: the parameter of format
+ * Return: number of char printed
  */
-int print_number_left_shift(char *str, format_fg *params)
+int print_number_left_shift(char *s, format_fg *flagPar)
 {
-	unsigned int n = 0, neg, neg2, i = _strlen(str);
-	char pad_char = ' ';
+	unsigned int n = 0, isNegative, i = _strlen(s);
 
-	if (params->zero && !params->minus)
-		pad_char = '0';
-	neg = neg2 = (!params->unsign && *str == '-');
-	if (neg && i < params->width && pad_char == '0' && !params->minus)
-		str++;
-	else
-		neg = 0;
-
-	if (params->plus && !neg2 && !params->unsign)
+	isNegative = (!flagPar->unsign && *s == '-');
+	if (flagPar->plus && !isNegative && !flagPar->unsign)
 		n += _putchar('+'), i++;
-	else if (params->space && !neg2 && !params->unsign)
+	else if (flagPar->space && !isNegative && !flagPar->unsign)
 		n += _putchar(' '), i++;
-	n += _puts(str);
-	while (i++ < params->width)
-		n += _putchar(pad_char);
+	n += _puts(s);
+	while (i++ < flagPar->width)
+		n += _putchar(' ');
 	return (n);
 }
