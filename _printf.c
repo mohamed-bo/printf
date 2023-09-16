@@ -16,7 +16,9 @@ int _printf(const char *format, ...)
 
 	va_start(agruments, format);
 
-	if (!format)
+	if (!format || (format[0] == '%' && !format[1]))
+		return (-1);
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
 		return (-1);
 	for (; *format_c; format_c++)
 	{
