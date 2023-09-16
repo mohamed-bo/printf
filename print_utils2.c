@@ -11,8 +11,7 @@ int print_number(char *s, format_fg *flagPar)
 	unsigned int i = _strlen(s);
 	int signn = (!flagPar->unsign && *s == '-');
 
-	if (!flagPar->precision && *s == '0' && !s[1])
-		s = "";
+
 	if (signn)
 	{
 		s++;
