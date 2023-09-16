@@ -77,10 +77,7 @@ int print_number(char *s, format_fg *flagPar)
 	if (isNegative)
 		*--s = '-';
 
-	if (!flagPar->minus)
-		return (print_number_right_shift(s, flagPar));
-	else
-		return (print_number_left_shift(s, flagPar));
+	return (print_number_left_shift(s, flagPar));
 }
 
 /**
@@ -96,7 +93,7 @@ int print_number_right_shift(char *s, format_fg *flagPar)
 	unsigned int signn;
 
 	signn = isNegative = (!flagPar->unsign && *s == '-');
-	if (signn && i < flagPar->width && flagPar->zero)
+	if (isNegative && i < flagPar->width && flagPar->zero)
 		s++;
 	else
 		signn = 0;
