@@ -48,13 +48,9 @@ int print_int(va_list agrument, format_fg *flagPar)
 int print_string(va_list agrument, format_fg *flagPar)
 {
 	char *s = va_arg(agrument, char *);
-	unsigned int precision = 0, counter = 0, i = 0, j;
+	unsigned int precision, counter = 0, i = 0, j;
 
 	(void)flagPar;
-	switch ((int)(!s))
-		case 1:
-			s = NULL_STRING;
-
 	j = precision = _strlen(s);
 	if (flagPar->precision < precision)
 		j = precision = flagPar->precision;

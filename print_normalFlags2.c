@@ -33,7 +33,7 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 
 	(void) flagPar;
 	if ((int)(!s))
-		return (_puts(NULL_STRING));
+		return (_puts("(null)"));
 	for (; *s; s++)
 	{
 		if ((*s > 0 && *s < 32) || *s >= 127)

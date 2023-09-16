@@ -9,7 +9,7 @@
  */
 int main(void)
 {
- _printf("test %.8s  \n","4444");
+ _printf("test%.0sa\n","4444");
     _printf("test %.8c  \n","5");
     _printf("test %.8d  \n",-5);
     _printf("test %.8h  \n",55);

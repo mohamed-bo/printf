@@ -8,10 +8,9 @@
 #include <stdlib.h>
 
 #define OUTPUT_BUF_SIZE 1024
-#define BUF_FLUSH -1
+#define EXITT -1
 #define LOWERCASE	1
 #define UNSIGNED	2
-#define NULL_STRING "(null)"
 
 /**
  * struct parameters - parameters of format
