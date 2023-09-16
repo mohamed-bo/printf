@@ -15,8 +15,8 @@ char *convert(long int number, int base, int flags)
 	char *current;
 	unsigned long num = number;
 
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	if (!(flags & CONVERT_UNSIGNED) && number < 0)
+	array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	if (!(flags & UNSIGNED) && number < 0)
 	{
 		num = -number;
 		sign = '-';
