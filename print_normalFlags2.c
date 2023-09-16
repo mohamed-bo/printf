@@ -80,6 +80,48 @@ int print_number(char *s, format_fg *flagPar)
 	return (print_number_left_shift(s, flagPar));
 }
 
+
+
+/**
+ * print_number_left_shift - prints a number flag minus
+ * @s: the number
+ * @flagPar: the parameter of format
+ * Return: number of char printed
+ */
+int print_number_left_shift(char *s, format_fg *flagPar)
+{
+	unsigned int counter = 0, i = _strlen(s);
+	unsigned int isNegative = (!flagPar->unsign && *s == '-');
+
+	if (!flagPar->minus)
+	{
+		while (i++ < flagPar->width)
+			counter += _putchar(' ');
+		if (!isNegative && !flagPar->unsign)
+		{
+		if (flagPar->plus)
+			counter += _putchar('+'), i++;
+		else if (flagPar->space)
+			counter += _putchar(' '), i++;
+		}
+		counter += _putString(s);
+	}
+	else
+	{
+		if (!isNegative && !flagPar->unsign)
+		{
+		if (flagPar->plus)
+			counter += _putchar('+'), i++;
+		else if (flagPar->space)
+			counter += _putchar(' '), i++;
+		}
+		counter += _putString(s);
+		while (i++ < flagPar->width)
+			counter += _putchar(' ');
+	}
+	return (counter);
+}
+
 /**
  * print_number_right_shift - prints a number flag non minus
  * @s: the number
@@ -118,28 +160,4 @@ int print_number_right_shift(char *s, format_fg *flagPar)
 		n += _putchar(' ');
 	n += _putString(s);
 	return (n);
-}
-
-/**
- * print_number_left_shift - prints a number flag minus
- * @s: the number
- * @flagPar: the parameter of format
- * Return: number of char printed
- */
-int print_number_left_shift(char *s, format_fg *flagPar)
-{
-	unsigned int counter = 0, i = _strlen(s);
-	unsigned int isNegative = (!flagPar->unsign && *s == '-');
-
-	if (!isNegative && !flagPar->unsign)
-	{
-	if (flagPar->plus)
-		counter += _putchar('+'), i++;
-	else if (flagPar->space)
-		counter += _putchar(' '), i++;
-	}
-	counter += _putString(s);
-	while (i++ < flagPar->width)
-		counter += _putchar(' ');
-	return (counter);
 }
