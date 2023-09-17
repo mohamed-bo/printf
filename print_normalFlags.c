@@ -48,8 +48,8 @@ int print_int(va_list agrument, format_fg *flagPar)
 int print_string(va_list agrument, format_fg *flagPar)
 {
 	char *s = va_arg(agrument, char *);
-	unsigned int precision, counter = 0, i = 0, width;
-	int len = 0;
+	unsigned int counter = 0, i = 0;
+	unsigned len = 0;
 
 	(void)flagPar;
 	if (s == NULL)
@@ -66,7 +66,7 @@ int print_string(va_list agrument, format_fg *flagPar)
 		{
 			for (i = 0; i < len; i++)
 				counter += _putchar(*s++);
-			for (i = width - len; i > 0; i--)
+			for (i = flagPar->width - len; i > 0; i--)
 				counter += _putchar(' ');
 			return (counter);
 		}
