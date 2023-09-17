@@ -49,27 +49,38 @@ int print_string(va_list agrument, format_fg *flagPar)
 {
 	char *s = va_arg(agrument, char *);
 	unsigned int precision, counter = 0, i = 0, width;
+	int len = 0;
 
 	(void)flagPar;
-	if ((int)(!s))
+	if (s == NULL)
+	{
 		s = "(null)";
-
-	width = precision = _strlen(s);
-	if (flagPar->precision < precision)
-		width = precision = flagPar->precision;
-
-	if (flagPar->minus)
-	{
-		for (i = 0; i < precision; i++)
-			counter += _putchar(*s++);
+		if (flagPar->precision >= 6)
+			s = " ";
 	}
-	while (width++ < flagPar->width)
-		counter += _putchar(' ');
-	if (!flagPar->minus)
+
+	len = _strlen(s);
+	if (flagPar->width > len)
 	{
-		for (i = 0; i < precision; i++)
-			counter += _putchar(*s++);
+		if (flagPar->minus)
+		{
+			for (i = 0; i < len; i++)
+				counter += _putchar(*s++);
+			for (i = width - len; i > 0; i--)
+				counter += _putchar(' ');
+			return (counter);
+		}
+		else
+		{
+			for (i = flagPar->width - len; i > 0; i--)
+				counter += _putchar(' ');
+			for (i = 0; i < len; i++)
+				counter += _putchar(*s++);
+			return (counter);
+		}
 	}
+	for (i = 0; i < len; i++)
+		counter += _putchar(*s++);
 	return (counter);
 }
 
