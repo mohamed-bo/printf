@@ -147,6 +147,7 @@ int print_stringNonPrintable(va_list agruments, char buffer[],
 	char *s = va_arg(agruments, char *);
 	int len = 0, after = 0;
 
+	UNUSED(flagPar);
 	if (s == NULL)
 		return (write(1, "(null)", 6));
 	while (s[len] != '\0')
@@ -170,9 +171,8 @@ int print_stringNonPrintable(va_list agruments, char buffer[],
  */
 int print_rot13(va_list agruments, char buffer[], format_fg *flagPar)
 {
-
 	char *s = va_arg(agruments, char *);
-	int i, j;
+	int i;
 	int count = 0;
 	char arr[] =
 		"NOPQRSTUVWXYZABCDEFGHIJKLM      nopqrstuvwxyzabcdefghijklm";

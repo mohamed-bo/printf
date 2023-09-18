@@ -79,6 +79,7 @@ int print_rev(va_list agruments, char buffer[], format_fg *flagPar)
 	char *s = va_arg(agruments, char *);
 
 	UNUSED(flagPar);
+	UNUSED(buffer);
 	if (s)
 	{
 		for (i = 0; *s; s++)
