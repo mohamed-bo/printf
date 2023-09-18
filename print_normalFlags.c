@@ -47,30 +47,43 @@ int print_int(va_list agrument, format_fg *flagPar)
  */
 int print_string(va_list agrument, format_fg *flagPar)
 {
-	char *s = va_arg(agrument, char *);
-	unsigned int precision, counter = 0, i = 0, width;
+	char *str = va_arg(agrument, char *);
+	unsigned int length = 0, i;
 
 	(void)flagPar;
-	if ((int)(!s))
-		s = "(null)";
 
-	width = precision = _strlen(s);
-	if (flagPar->precision < precision)
-		width = precision = flagPar->precision;
+	if (str == NULL)
+	{
+		str = "(null)";
+		if (flagPar->precision >= 6)
+			str = " ";
+	}
 
-	if (flagPar->minus)
+	while (str[length] != '\0')
+		length++;
+
+	if (flagPar->precision > 0 && flagPar->precision < length)
+		length = flagPar->precision;
+
+	if (flagPar->width > length)
 	{
-		for (i = 0; i < precision; i++)
-			counter += _putchar(*s++);
+		if (flagPar->minus)
+		{
+			write(1, &str[0], length);
+			for (i = flagPar->width - length; i > 0; i--)
+				write(1, " ", 1);
+			return (flagPar->width);
+		}
+		else
+		{
+			for (i = flagPar->width - length; i > 0; i--)
+				write(1, " ", 1);
+			write(1, &str[0], length);
+			return (flagPar->width);
+		}
 	}
-	while (width++ < flagPar->width)
-		counter += _putchar(' ');
-	if (!flagPar->minus)
-	{
-		for (i = 0; i < precision; i++)
-			counter += _putchar(*s++);
-	}
-	return (counter);
+
+	return (write(1, str, length));
 }
 
 /**
