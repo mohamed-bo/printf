@@ -9,11 +9,11 @@
 int print_char(va_list agrument, format_fg *flagPar)
 {
 	unsigned int ch = va_arg(agrument, int);
-	unsigned int width = 1, counter = 0;
+	unsigned int precision = 1, counter = 0;
 
 	if (flagPar->minus)
 		counter += _putchar(ch);
-	while (width++ < flagPar->width)
+	while (precision++ < flagPar->width)
 		counter += _putchar(' ');
 	if (!flagPar->minus)
 		counter += _putchar(ch);
@@ -48,39 +48,35 @@ int print_int(va_list agrument, format_fg *flagPar)
 int print_string(va_list agrument, format_fg *flagPar)
 {
 	char *s = va_arg(agrument, char *);
-	unsigned int counter = 0, i = 0;
-	unsigned len = 0;
+	unsigned int precision = 0, counter = 0, i = 0, j;
 
 	(void)flagPar;
-	if (s == NULL)
-	{
-		s = "(null)";
-		if (flagPar->precision >= 6)
-			s = " ";
-	}
+	switch ((int)(!s))
+		case 1:
+			s = NULL_STRING;
 
-	len = _strlen(s);
-	if (flagPar->width > len)
+	j = precision = _strlen(s);
+	if (flagPar->precision < precision)
+		j = precision = flagPar->precision;
+
+	if (flagPar->minus)
 	{
-		if (flagPar->minus)
-		{
-			for (i = 0; i < len; i++)
+		if (flagPar->precision != UINT_MAX)
+			for (i = 0; i < precision; i++)
 				counter += _putchar(*s++);
-			for (i = flagPar->width - len; i > 0; i--)
-				counter += _putchar(' ');
-			return (counter);
-		}
 		else
-		{
-			for (i = flagPar->width - len; i > 0; i--)
-				counter += _putchar(' ');
-			for (i = 0; i < len; i++)
-				counter += _putchar(*s++);
-			return (counter);
-		}
+			counter += _puts(s);
 	}
-	for (i = 0; i < len; i++)
-		counter += _putchar(*s++);
+	while (j++ < flagPar->width)
+		counter += _putchar(' ');
+	if (!flagPar->minus)
+	{
+		if (flagPar->precision != UINT_MAX)
+			for (i = 0; i < precision; i++)
+				counter += _putchar(*s++);
+		else
+			counter += _puts(s);
+	}
 	return (counter);
 }
 

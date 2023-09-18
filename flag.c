@@ -3,7 +3,6 @@
 /**
  * init_params - clear the paramter and reset buffer
  * @flagPar: the parameter of format
- * @agruments: the argument pointer
  */
 void init_params(format_fg *flagPar, va_list agruments)
 {

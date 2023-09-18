@@ -16,9 +16,7 @@ int _printf(const char *format, ...)
 
 	va_start(agruments, format);
 
-	if (!format || (format[0] == '%' && !format[1]))
-		return (-1);
-	if (format[0] == '%' && format[1] == ' ' && !format[2])
+	if (!format)
 		return (-1);
 	for (; *format_c; format_c++)
 	{
@@ -39,7 +37,7 @@ int _printf(const char *format, ...)
 				counter += flagPar.specifier(agruments, &flagPar);
 		}
 	}
-	_putchar(EXITT);
+	_putchar(BUF_FLUSH);
 	va_end(agruments);
 	return (counter);
 }
