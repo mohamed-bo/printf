@@ -16,7 +16,7 @@ void init_params(format_fg *flagPar, va_list agruments)
 	flagPar->minus = 0;
 
 	flagPar->width = 0;
-	flagPar->precision = UINT_MAX;
+	flagPar->precision = -1;
 
 	flagPar->h_mod = 0;
 	flagPar->l_mod = 0;
@@ -110,21 +110,29 @@ char *get_width(char *s, format_fg *flagPar, va_list agrument)
  */
 char *get_precision(char *s, format_fg *flagPar, va_list agrument)
 {
-	int precision = 0;
+	int precision = -1;
 
 	if (*s != '.')
 		return (s);
 	s++;
-	if (*s == '*')
+	precision = 0;
+	for (; *s != '\0'; s++)
 	{
-		precision = va_arg(agrument, int);
-		s++;
+		if (_isdigit(*s))
+		{
+			precision *= 10;
+			precision += *s - '0';
+		}
+		else if (*s == '*')
+		{
+			s++;
+			precision = va_arg(agrument, int);
+			break;
+		}
+		else
+			break;
 	}
-	else
-	{
-		while (_isdigit(*s))
-			precision = precision * 10 + (*s++ - '0');
-	}
+
 	flagPar->precision = precision;
 	return (s);
 }
