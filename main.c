@@ -40,5 +40,6 @@ int main(void)
     printf("Len:[%13.15d]\n", len2);
     _printf("Unknown:[%13.15r]\n");
     printf("Unknown:[%13.15r]\n");
+    _printf("%4.0d", 0);
     return (0);
 }

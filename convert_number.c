@@ -15,7 +15,7 @@ int print_bin(va_list agrument, format_fg *flagPar)
 	flagPar->unsign = 1;
 	if (flagPar->hashtag && number)
 		*--str = '0';
-	return (counter += print_number(str, flagPar));
+	return (counter += write_unsgnd(str, flagPar));
 }
 
 /**
@@ -41,7 +41,7 @@ int print_oct(va_list agrument, format_fg *flagPar)
 
 	if (flagPar->hashtag && number)
 		*--str = '0';
-	return (counter += print_number(str, flagPar));
+	return (counter += write_unsgnd(str, flagPar));
 }
 
 /**
@@ -71,7 +71,7 @@ int print_hex(va_list agrument, format_fg *flagPar)
 		*--str = '0';
 	}
 
-	return (counter += print_number(str, flagPar));
+	return (counter += write_unsgnd(str, flagPar));
 }
 
 /**
@@ -100,5 +100,5 @@ int print_HEX(va_list agrument, format_fg *flagPar)
 		*--str = 'X';
 		*--str = '0';
 	}
-	return (counter += print_number(str, flagPar));
+	return (counter += write_unsgnd(str, flagPar));
 }

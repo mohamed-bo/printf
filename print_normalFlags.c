@@ -36,7 +36,7 @@ int print_int(va_list agrument, format_fg *flagPar)
 		number = (short int)va_arg(agrument, int);
 	else
 		number = (int)va_arg(agrument, int);
-	return (print_number(convert(number, 10, 0), flagPar));
+	return (write_num(convert(number, 10, 0), flagPar));
 }
 
 /**
@@ -103,5 +103,5 @@ int print_unsigned(va_list agrument, format_fg *flagPar)
 		number = (unsigned short int)va_arg(agrument, unsigned int);
 	else
 		number = (unsigned int)va_arg(agrument, unsigned int);
-	return (print_number(convert(number, 10, UNSIGNED), flagPar));
+	return (write_unsgnd(convert(number, 10, UNSIGNED), flagPar));
 }

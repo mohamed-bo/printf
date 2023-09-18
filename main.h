@@ -66,7 +66,7 @@ int print_HEX(va_list agrument, format_fg *flagPar);
 
 /* convert.c module */
 char *convert(long int num, int base, int flags);
-
+int write_unsgnd(char *s, format_fg *flagPar);
 /* flag.c module */
 void init_params(format_fg *flagPar, va_list agruments);
 char *get_flag_param(char *s, format_fg *flagPar, va_list agruments);
@@ -75,7 +75,8 @@ char *get_width(char *s, format_fg *flagPar, va_list agrument);
 char *get_precision(char *p, format_fg *flagPar, va_list agrument);
 char *get_modifier(char *s, format_fg *flagPar);
 int get_specifier(char *s, format_fg *flagPar);
-
+int print_num(char *s, format_fg *flagPar);
+int write_unsgnd(char *s, format_fg *flagPar);
 /* print_normalFlags.c module */
 int print_char(va_list agrument, format_fg *flagPar);
 int print_int(va_list agrument, format_fg *flagPar);
@@ -91,9 +92,9 @@ int _strlen(char *s);
 int printRange(char *begin, char *stop, char *except);
 int print_rev(va_list agrument, format_fg *flagPar);
 int print_rot13(va_list agrument, format_fg *flagPar);
-int print_number(char *str, format_fg *flagPar);
-int print_number_right_shift(char *str, format_fg *flagPar);
-int print_number_left_shift(char *str, format_fg *flagPar);
+int write_num(char *str, format_fg *flagPar);
+int write_num_right_shift(char *str, format_fg *flagPar);
+int write_num_left_shift(char *str, format_fg *flagPar);
 
 /* _prinf.c module */
 int _printf(const char *format, ...);

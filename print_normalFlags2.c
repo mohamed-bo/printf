@@ -35,12 +35,12 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 }
 
 /**
- * print_number - prints a number
+ * print_num - prints a number
  * @s: the number
  * @flagPar: the parameter of format
  * Return: number of char printed
  */
-int print_number(char *s, format_fg *flagPar)
+int print_num(char *s, format_fg *flagPar)
 {
 	unsigned int len = _strlen(s);
 	int isNegative = (!flagPar->unsign && *s == '-');
@@ -59,18 +59,18 @@ int print_number(char *s, format_fg *flagPar)
 		*--s = '-';
 
 	if (!flagPar->minus)
-		return (print_number_right_shift(s, flagPar));
+		return (write_num_right_shift(s, flagPar));
 	else
-		return (print_number_left_shift(s, flagPar));
+		return (write_num_left_shift(s, flagPar));
 }
 
 /**
- * print_number_right_shift - prints a number flag non minus
+ * write_num_right_shift - prints a number flag non minus
  * @s: the number
  * @flagPar: the parameter of format
  * Return: number of char printed
  */
-int print_number_right_shift(char *s, format_fg *flagPar)
+int write_num_right_shift(char *s, format_fg *flagPar)
 {
 	unsigned int n = 0, isNegative, i = _strlen(s);
 	char paddingChar = flagPar->zero ? '0' : ' ';
@@ -105,12 +105,12 @@ int print_number_right_shift(char *s, format_fg *flagPar)
 }
 
 /**
- * print_number_left_shift - prints a number flag minus
+ * write_num_left_shift - prints a number flag minus
  * @s: the number
  * @flagPar: the parameter of format
  * Return: number of char printed
  */
-int print_number_left_shift(char *s, format_fg *flagPar)
+int write_num_left_shift(char *s, format_fg *flagPar)
 {
 	unsigned int counter = 0, i = _strlen(s);
 	unsigned int isNegative = (!flagPar->unsign && *s == '-');
