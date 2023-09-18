@@ -71,9 +71,10 @@ int print_number(char *s, format_fg *flagPar)
 		s++;
 		len--;
 	}
-	if (flagPar->precision != UINT_MAX)
-		while (len++ < flagPar->precision && *s != '0')
-			*--s = '0';
+	if (*s != '0')
+		if (flagPar->precision != UINT_MAX)
+			while (len++ < flagPar->precision)
+				*--s = '0';
 	if (isNegative)
 		*--s = '-';
 
