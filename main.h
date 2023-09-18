@@ -8,10 +8,9 @@
 #include <stdlib.h>
 
 #define OUTPUT_BUF_SIZE 1024
-#define BUF_FLUSH -1
+#define EXITT -1
 #define LOWERCASE	1
 #define UNSIGNED	2
-#define NULL_STRING "(null)"
 
 /**
  * struct parameters - parameters of format
@@ -56,7 +55,7 @@ typedef struct specifier
 } format_specifier;
 
 /* _put.c module */
-int _puts(char *str);
+int _putString(char *str);
 int _putchar(int c);
 
 /* convert_number.c module */

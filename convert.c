@@ -9,18 +9,26 @@
  */
 char *convert(long int number, int base, int flags)
 {
-	char *array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	static char buffer[25];
-	unsigned long num = flags & UNSIGNED && number < 0 ? -number : number;
-	char sign = flags & UNSIGNED && number < 0 ? '-' : 0;
+	static char *array;
+	static char buffer[28];
+	char sign = 0;
 	char *current;
+	unsigned long num = number;
 
-	current = &buffer[24];
+	array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	if (!(flags & UNSIGNED) && number < 0)
+	{
+		num = -number;
+		sign = '-';
+
+	}
+	current = &buffer[27];
 	*current = '\0';
 	do	{
 		*--current = array[num % base];
 		num /= base;
 	} while (num != 0);
+
 	if (sign)
 		*--current = sign;
 	return (current);
