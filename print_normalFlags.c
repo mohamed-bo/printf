@@ -48,42 +48,48 @@ int print_int(va_list agrument, format_fg *flagPar)
 int print_string(va_list agrument, format_fg *flagPar)
 {
 	char *str = va_arg(agrument, char *);
-	unsigned int length = 0, i;
-
-	(void)flagPar;
+	int counter = 0 ,length = 0, i;
+	char buffer[1024];
+	char *padding = &buffer[1023];
+	int precision = flagPar->precision == UINT_MAX ? -1 : (int) flagPar->precision;
+	int width = (int) flagPar->width;
+	*padding = '\0';
 
 	if (str == NULL)
 	{
 		str = "(null)";
-		if (flagPar->precision >= 6)
+		if (precision >= 6)
 			str = " ";
 	}
 
 	while (str[length] != '\0')
 		length++;
 
-	if (flagPar->precision > 0 && flagPar->precision < length)
-		length = flagPar->precision;
+	if (precision >= 0 && precision < length)
+		length = precision;
 
-	if (flagPar->width > length)
+	if (width > length)
 	{
 		if (flagPar->minus)
 		{
-			write(1, &str[0], length);
-			for (i = flagPar->width - length; i > 0; i--)
-				write(1, " ", 1);
-			return (flagPar->width);
+			counter += _putString(str);
+			for (i = width - length; i > 0; i--)
+				*--padding = ' ';
+			counter += _putString(padding);
+			return (counter);
 		}
 		else
 		{
-			for (i = flagPar->width - length; i > 0; i--)
-				write(1, " ", 1);
-			write(1, &str[0], length);
-			return (flagPar->width);
+			for (i = width - length; i > 0; i--)
+				*--padding = ' ';
+			counter += _putString(padding);
+			counter += _putString(str);
+			return (counter);
 		}
 	}
+	counter += _putString(str);
+	return (counter);
 
-	return (write(1, str, length));
 }
 
 /**
