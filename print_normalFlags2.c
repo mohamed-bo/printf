@@ -1,25 +1,6 @@
 #include "main.h"
 
 /**
- * print_address - prints address
- * @agrument: argument pointer
- * @flagPar: the parameter of format
- * Return: number char printed
- */
-int print_address(va_list agrument, format_fg *flagPar)
-{
-	unsigned long int number = va_arg(agrument, unsigned long int);
-	char *s;
-
-	if (!number)
-		return (_putString("(nil)"));
-	s = convert(number, 16, UNSIGNED | LOWERCASE);
-	*--s = 'x';
-	*--s = '0';
-	return (print_number(s, flagPar));
-}
-
-/**
  * print_stringNonPrintable - custom format specifier
  * @agrument: argument pointer
  * @flagPar: the parameter of format

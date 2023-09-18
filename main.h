@@ -57,7 +57,7 @@ typedef struct specifier
 /* _put.c module */
 int _putString(char *str);
 int _putchar(int c);
-
+int handle_adresse(char *s, format_fg *flagPar);
 /* convert_number.c module */
 int print_bin(va_list agrument, format_fg *flagPar);
 int print_oct(va_list agrument, format_fg *flagPar);

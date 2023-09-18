@@ -10,7 +10,7 @@
 char *convert(long int number, int base, int flags)
 {
 	static char *array;
-	static char buffer[28];
+	static char buffer[1024];
 	char sign = 0;
 	char *current;
 	unsigned long num = number;
@@ -22,7 +22,7 @@ char *convert(long int number, int base, int flags)
 		sign = '-';
 
 	}
-	current = &buffer[27];
+	current = &buffer[1023];
 	*current = '\0';
 	do	{
 		*--current = array[num % base];
