@@ -76,7 +76,7 @@ int print_string(va_list agrument, format_fg *flagPar)
 			for (i = width - length; i > 0; i--)
 				*--padding = ' ';
 			counter += _putString(padding);
-			return (counter);
+			return (width);
 		}
 		else
 		{
@@ -84,7 +84,7 @@ int print_string(va_list agrument, format_fg *flagPar)
 				*--padding = ' ';
 			counter += _putString(padding);
 			counter += _putString(str);
-			return (counter);
+			return (width);
 		}
 	}
 	counter += _putString(str);
