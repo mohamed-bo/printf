@@ -39,7 +39,7 @@ int _printf(const char *format, ...)
 				counter += flagPar.specifier(agruments, &flagPar);
 		}
 	}
-	_putchar(EXIT);
+	_putchar(EXITT);
 	va_end(agruments);
 	return (counter);
 }
