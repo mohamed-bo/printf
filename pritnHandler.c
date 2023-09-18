@@ -26,11 +26,10 @@ int print_address(va_list agrument, format_fg *flagPar)
 int handle_adresse(char *s, format_fg *flagPar)
 {
 	unsigned int counter = 0, len = _strlen(s);
-	int isNegative = (!flagPar->unsign && *s == '-');
 	char extra_c = 0, padd = ' ';
 	static char buffer[1024];
 	char *padding = &buffer[1023];
-	int i;
+	unsigned int i;
 
     *padding= '\0';
 	if ((flagPar->zero) && !(flagPar->minus))
