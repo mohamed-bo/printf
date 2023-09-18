@@ -10,13 +10,24 @@ int print_char(va_list agrument, format_fg *flagPar)
 {
 	unsigned int ch = va_arg(agrument, int);
 	unsigned int width = 1, counter = 0;
+	char c[2];
+	char buffer[1024];
+	char *p = &buffer[1023];
+
+	*p = '\0';
+
+
+	c[0] = ch;
+	c[1] = '\0';
 
 	if (flagPar->minus)
-		counter += _putchar(ch);
+		counter += _putString(c);
 	while (width++ < flagPar->width)
-		counter += _putchar(' ');
+		*--p = ' ';
+	
+	counter += _putString(p);
 	if (!flagPar->minus)
-		counter += _putchar(ch);
+		counter += _putString(c);
 	return (counter);
 }
 
