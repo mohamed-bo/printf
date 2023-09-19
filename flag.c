@@ -47,7 +47,6 @@ char *get_flag_param(char *s, format_fg *flagPar, va_list agruments)
  */
 int get_flag(char *s, format_fg *flagPar)
 {
-	int isFlag = 0;
 
 	switch (*s)
 	{
