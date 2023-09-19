@@ -75,6 +75,7 @@ char *get_width(char *s, format_fg *flagPar, va_list agrument);
 char *get_precision(char *p, format_fg *flagPar, va_list agrument);
 char *get_modifier(char *s, format_fg *flagPar);
 int get_specifier(char *s, format_fg *flagPar);
+
 /* print_normalFlags.c module */
 int print_char(va_list agrument, format_fg *flagPar);
 int print_int(va_list agrument, format_fg *flagPar);
@@ -92,6 +93,7 @@ int print_rev(va_list agrument, format_fg *flagPar);
 int print_rot13(va_list agrument, format_fg *flagPar);
 int print_number(char *str, format_fg *flagPar);
 int print_number_right_shift(char *str, format_fg *flagPar);
+int print_number_left_shift(char *str, format_fg *flagPar);
 
 /* _prinf.c module */
 int _printf(const char *format, ...);
