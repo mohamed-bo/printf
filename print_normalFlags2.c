@@ -47,7 +47,7 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 
 	buffer[i + offset] = '\0';
 
-	return (write(1, buffer, i + offset));
+	return (write(1, buffer, i + offset) + 1);
 }
 
 /**
