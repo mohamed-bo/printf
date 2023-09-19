@@ -1,61 +1,45 @@
 #include "main.h"
 
 /**
- * print_buffer - using buff to limit write
- * @buffer: Array of char
- * @current: index of current
+ * _printf - simulation of printf library in c
+ * @format: the format string
+ * Return: number of char printed using write
  */
-
-void print_buffer(char buffer[], int *current)
-{
-	if (*current > 0)
-		write(1, &buffer[0], *current);
-
-	*current = 0;
-}
-
-/**
- * _printf - similar to printf of langauge c
- * @format: format to print
- * Return: length of printed characters
- */
-
 int _printf(const char *format, ...)
 {
-	int i, counter = 0, paramsCount = 0;
-	int current = 0;
-	format_fg flagPar;
+	int counter = 0;
 	va_list agruments;
-	char buffer[BUFF_SIZE];
+	char *begin;
+	char *format_c = (char *)format;
 
-	if (format == NULL)
-		return (-1);
+	format_fg flagPar;
 
 	va_start(agruments, format);
 
-	for (i = 0; format && format[i] != '\0'; i++)
+	if (!format || (format[0] == '%' && !format[1]))
+		return (-1);
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (; *format_c; format_c++)
 	{
-		if (format[i] != '%')
+		init_params(&flagPar, agruments);
+		if (*format_c != '%')
 		{
-			buffer[current++] = format[i];
-			if (current == BUFF_SIZE)
-				print_buffer(buffer, &current);
-			counter++;
+			counter += _putchar(*format_c);
 		}
 		else
 		{
-			print_buffer(buffer, &current);
-			paramsCount = get_flag_param(format, &flagPar, agruments, &i, buffer);
-			if (paramsCount == -1)
-				return (-1);
-			counter += paramsCount;
+			begin = format_c;
+			format_c++;
+			format_c = get_flag_param(format_c, &flagPar, agruments);
+			if (!flagPar.specifier)
+				counter += printRange(begin, format_c,
+										 flagPar.l_mod || flagPar.h_mod ? format_c - 1 : 0);
+			else
+				counter += flagPar.specifier(agruments, &flagPar);
 		}
 	}
-
-	print_buffer(buffer, &current);
+	_putchar(EXITT);
 	va_end(agruments);
-
 	return (counter);
 }
-
-
