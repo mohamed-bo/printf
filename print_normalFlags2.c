@@ -115,7 +115,8 @@ int printNonMinus(char *s, format_fg *flagPar)
 		i++;
 	if (signn && (flagPar->flag & ZERO))
 		counter += _putchar('-');
-	if ((flagPar->flag & PLUS) && !isNegative && (flagPar->flag & ZERO) && !(flagPar->flag & UNSI))
+	if ((flagPar->flag & PLUS) && !isNegative &&
+	 (flagPar->flag & ZERO) && !(flagPar->flag & UNSI))
 		counter += _putchar('+');
 	else if (!(flagPar->flag & PLUS) && (flagPar->flag & SPACE) && !isNegative &&
 		!(flagPar->flag & UNSI) && (flagPar->flag & ZERO))
@@ -124,7 +125,8 @@ int printNonMinus(char *s, format_fg *flagPar)
 		counter += _putchar(paddingChar);
 	if (signn && !(flagPar->flag & ZERO))
 		counter += _putchar('-');
-	if ((flagPar->flag & PLUS) && !isNegative && !(flagPar->flag & ZERO) && !(flagPar->flag & UNSI))
+	if ((flagPar->flag & PLUS) && !isNegative &&
+	 !(flagPar->flag & ZERO) && !(flagPar->flag & UNSI))
 		counter += _putchar('+');
 	else if (!(flagPar->flag & PLUS) && (flagPar->flag & SPACE) && !isNegative &&
 		!(flagPar->flag & UNSI) && !(flagPar->flag & ZERO))

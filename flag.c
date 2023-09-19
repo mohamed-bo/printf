@@ -7,7 +7,7 @@
  */
 void init_params(format_fg *flagPar, va_list agruments)
 {
-	flagPar->flag= 0;
+	flagPar->flag = 0;
 
 	flagPar->width = 0;
 	flagPar->precision = UINT_MAX;
@@ -53,23 +53,18 @@ int get_flag(char *s, format_fg *flagPar)
 		case '+':
 			flagPar->flag |= PLUS;
 			return (1);
-			break;
 		case ' ':
 			flagPar->flag |= SPACE;
 			return (1);
-			break;
 		case '#':
 			flagPar->flag |= HASH;
 			return (1);
-			break;
 		case '-':
 			flagPar->flag |= MINUS;
 			return (1);
-			break;
 		case '0':
 			flagPar->flag |= ZERO;
 			return (1);
-			break;
 	}
 	return (0);
 }
