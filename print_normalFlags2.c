@@ -32,7 +32,7 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 	char *hex;
 
 	(void) flagPar;
-	if (s == NULL)
+	if ((int)(!s))
 		return (_putString("(null)"));
 	for (; *s; s++)
 	{
@@ -63,7 +63,6 @@ int print_number(char *s, format_fg *flagPar)
 {
 	unsigned int len = _strlen(s);
 	int isNegative = (!flagPar->unsign && *s == '-');
-	unsigned int counter = 0, i = _strlen(s);
 
 	if (!flagPar->precision && *s == '0' && !s[1])
 		s = "";
@@ -80,17 +79,8 @@ int print_number(char *s, format_fg *flagPar)
 
 	if (!flagPar->minus)
 		return (print_number_right_shift(s, flagPar));
-	if (!isNegative && !flagPar->unsign)
-	{
-	if (flagPar->plus)
-		counter += _putchar('+'), i++;
-	else if (flagPar->space)
-		counter += _putchar(' '), i++;
-	}
-	counter += _putString(s);
-	while (i++ < flagPar->width)
-		counter += _putchar(' ');
-	return (counter);
+	else
+		return (print_number_left_shift(s, flagPar));
 }
 
 /**
@@ -133,3 +123,26 @@ int print_number_right_shift(char *s, format_fg *flagPar)
 	return (n);
 }
 
+/**
+ * print_number_left_shift - prints a number flag minus
+ * @s: the number
+ * @flagPar: the parameter of format
+ * Return: number of char printed
+ */
+int print_number_left_shift(char *s, format_fg *flagPar)
+{
+	unsigned int counter = 0, i = _strlen(s);
+	unsigned int isNegative = (!flagPar->unsign && *s == '-');
+
+	if (!isNegative && !flagPar->unsign)
+	{
+	if (flagPar->plus)
+		counter += _putchar('+'), i++;
+	else if (flagPar->space)
+		counter += _putchar(' '), i++;
+	}
+	counter += _putString(s);
+	while (i++ < flagPar->width)
+		counter += _putchar(' ');
+	return (counter);
+}
