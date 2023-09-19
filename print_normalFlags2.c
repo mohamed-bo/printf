@@ -27,50 +27,30 @@ int print_address(va_list agrument, format_fg *flagPar)
  */
 int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 {
-	int i = 0, offset = 0;
-	char *str = va_arg(agrument, char *);
-	char buffer[1024];
+	char *s = va_arg(agrument, char *);
+	int counter = 0;
+	char *hex;
 
 	(void) flagPar;
-	if (str == NULL)
-		return (write(1, "(null)", 6));
-
-	while (str[i] != '\0')
+	if (s == NULL)
+		return (_putString("(null)"));
+	for (; *s; s++)
 	{
-		if (str[i] >= 32 && str[i] < 127)
-			buffer[i + offset] = str[i];
+		if ((*s > 0 && *s < 32) || *s >= 127)
+		{
+			counter += _putchar('\\');
+			counter += _putchar('x');
+			hex = convert(*s, 16, 0);
+			if (!hex[1])
+				counter += _putchar('0');
+			counter += _putString(hex);
+		}
 		else
-			offset += append_hexa_code(str[i], buffer, i + offset);
-
-		i++;
+		{
+			counter += _putchar(*s);
+		}
 	}
-
-	buffer[i + offset] = '\0';
-
-	return (write(1, buffer, i + offset) + 1);
-}
-
-/**
- * append_hexa_code - Append ascci in hexadecimal code to buffer
- * @buffer: Array of chars.
- * @i: Index at which to start appending.
- * @ascii_code: ASSCI CODE.
- * Return: Always 3
- */
-int append_hexa_code(char ascii_code, char buffer[], int i)
-{
-	char map_to[] = "0123456789ABCDEF";
-	/* The hexa format code is always 2 digits long */
-	if (ascii_code < 0)
-		ascii_code *= -1;
-
-	buffer[i++] = '\\';
-	buffer[i++] = 'x';
-
-	buffer[i++] = map_to[ascii_code / 16];
-	buffer[i] = map_to[ascii_code % 16];
-
-	return (3);
+	return (counter);
 }
 
 /**
