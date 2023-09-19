@@ -8,14 +8,32 @@
  */
 int print_bin(va_list agrument, format_fg *flagPar)
 {
-	unsigned int number = va_arg(agrument, unsigned int);
-	char *str = convert(number, 2, UNSIGNED);
-	int counter = 0;
+	unsigned int n, m, i, sum;
+	unsigned int a[32];
+	int count;
 
-	flagPar->unsign = 1;
-	if (flagPar->hashtag && number)
-		*--str = '0';
-	return (counter += write_unsgnd(str, flagPar));
+	(void)(flagPar);
+
+	n = va_arg(agrument, unsigned int);
+	m = 2147483648;
+	a[0] = n / m;
+	for (i = 1; i < 32; i++)
+	{
+		m /= 2;
+		a[i] = (n / m) % 2;
+	}
+	for (i = 0, sum = 0, count = 0; i < 32; i++)
+	{
+		sum += a[i];
+		if (sum || i == 31)
+		{
+			char z = '0' + a[i];
+
+			write(1, &z, 1);
+			count++;
+		}
+	}
+	return (count);
 }
 
 /**
