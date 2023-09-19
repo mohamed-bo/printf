@@ -27,28 +27,50 @@ int print_address(va_list agrument, format_fg *flagPar)
  */
 int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 {
-	char *s = va_arg(agrument, char *);
-	int counter = 0;
-	char *hex;
+	int i = 0, offset = 0;
+	char *str = va_arg(agrument, char *);
+	char buffer[1024];
 
 	(void) flagPar;
-	if (s == NULL)
-		return (_putString("(null)"));
-	for (; *s; s++)
+	if (str == NULL)
+		return (write(1, "(null)", 6));
+
+	while (str[i] != '\0')
 	{
-		if ((*s > 0 && *s < 32) || *s >= 127)
-		{
-			counter += _putchar('\\');
-			counter += _putchar('x');
-			hex = convert(*s, 16, 0);
-			counter += _putString(hex);
-		}
+		if (str[i] >= 32 && str[i] < 127)
+			buffer[i + offset] = str[i];
 		else
-		{
-			counter += _putchar(*s);
-		}
+			offset += append_hexa_code(str[i], buffer, i + offset);
+
+		i++;
 	}
-	return (counter);
+
+	buffer[i + offset] = '\0';
+
+	return (write(1, buffer, i + offset));
+}
+
+/**
+ * append_hexa_code - Append ascci in hexadecimal code to buffer
+ * @buffer: Array of chars.
+ * @i: Index at which to start appending.
+ * @ascii_code: ASSCI CODE.
+ * Return: Always 3
+ */
+int append_hexa_code(char ascii_code, char buffer[], int i)
+{
+	char map_to[] = "0123456789ABCDEF";
+	/* The hexa format code is always 2 digits long */
+	if (ascii_code < 0)
+		ascii_code *= -1;
+
+	buffer[i++] = '\\';
+	buffer[i++] = 'x';
+
+	buffer[i++] = map_to[ascii_code / 16];
+	buffer[i] = map_to[ascii_code % 16];
+
+	return (3);
 }
 
 /**
@@ -61,6 +83,7 @@ int print_number(char *s, format_fg *flagPar)
 {
 	unsigned int len = _strlen(s);
 	int isNegative = (!flagPar->unsign && *s == '-');
+	unsigned int counter = 0, i = _strlen(s);
 
 	if (!flagPar->precision && *s == '0' && !s[1])
 		s = "";
@@ -77,8 +100,17 @@ int print_number(char *s, format_fg *flagPar)
 
 	if (!flagPar->minus)
 		return (print_number_right_shift(s, flagPar));
-	else
-		return (print_number_left_shift(s, flagPar));
+	if (!isNegative && !flagPar->unsign)
+	{
+	if (flagPar->plus)
+		counter += _putchar('+'), i++;
+	else if (flagPar->space)
+		counter += _putchar(' '), i++;
+	}
+	counter += _putString(s);
+	while (i++ < flagPar->width)
+		counter += _putchar(' ');
+	return (counter);
 }
 
 /**
@@ -121,26 +153,3 @@ int print_number_right_shift(char *s, format_fg *flagPar)
 	return (n);
 }
 
-/**
- * print_number_left_shift - prints a number flag minus
- * @s: the number
- * @flagPar: the parameter of format
- * Return: number of char printed
- */
-int print_number_left_shift(char *s, format_fg *flagPar)
-{
-	unsigned int counter = 0, i = _strlen(s);
-	unsigned int isNegative = (!flagPar->unsign && *s == '-');
-
-	if (!isNegative && !flagPar->unsign)
-	{
-	if (flagPar->plus)
-		counter += _putchar('+'), i++;
-	else if (flagPar->space)
-		counter += _putchar(' '), i++;
-	}
-	counter += _putString(s);
-	while (i++ < flagPar->width)
-		counter += _putchar(' ');
-	return (counter);
-}
