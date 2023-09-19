@@ -12,8 +12,8 @@ int print_bin(va_list agrument, format_fg *flagPar)
 	char *str = convert(number, 2, UNSIGNED);
 	int counter = 0;
 
-	flagPar->unsign = 1;
-	if (flagPar->hashtag && number)
+	flagPar->flag |= UNSI;
+	if ((flagPar->flag & HASH) && number)
 		*--str = '0';
 	return (counter += print_number(str, flagPar));
 }
@@ -30,7 +30,7 @@ int print_oct(va_list agrument, format_fg *flagPar)
 	char *str;
 	int counter = 0;
 
-	flagPar->unsign = 1;
+	flagPar->flag |= UNSI;
 	if (flagPar->l_mod)
 		number = (unsigned long)va_arg(agrument, unsigned long);
 	else if (flagPar->h_mod)
@@ -39,7 +39,7 @@ int print_oct(va_list agrument, format_fg *flagPar)
 		number = (unsigned int)va_arg(agrument, unsigned int);
 	str = convert(number, 8, UNSIGNED);
 
-	if (flagPar->hashtag && number)
+	if ((flagPar->flag & HASH) && number)
 		*--str = '0';
 	return (counter += print_number(str, flagPar));
 }
@@ -56,7 +56,7 @@ int print_hex(va_list agrument, format_fg *flagPar)
 	int counter = 0;
 	char *str;
 
-	flagPar->unsign = 1;
+	flagPar->flag |= UNSI;
 	if (flagPar->l_mod)
 		number = (unsigned long)va_arg(agrument, unsigned long);
 	else if (flagPar->h_mod)
@@ -65,7 +65,7 @@ int print_hex(va_list agrument, format_fg *flagPar)
 		number = (unsigned int)va_arg(agrument, unsigned int);
 
 	str = convert(number, 16, UNSIGNED | LOWERCASE);
-	if (number && flagPar->hashtag)
+	if (number && (flagPar->flag & HASH))
 	{
 		*--str = 'x';
 		*--str = '0';
@@ -86,7 +86,7 @@ int print_HEX(va_list agrument, format_fg *flagPar)
 	int counter = 0;
 	char *str;
 
-	flagPar->unsign = 1;
+	flagPar->flag |= UNSI;
 	if (flagPar->l_mod)
 		number = (unsigned long)va_arg(agrument, unsigned long);
 	else if (flagPar->h_mod)
@@ -95,7 +95,7 @@ int print_HEX(va_list agrument, format_fg *flagPar)
 		number = (unsigned int)va_arg(agrument, unsigned int);
 
 	str = convert(number, 16, UNSIGNED);
-	if (flagPar->hashtag && number)
+	if ((flagPar->flag & HASH) && number)
 	{
 		*--str = 'X';
 		*--str = '0';

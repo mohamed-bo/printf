@@ -12,15 +12,19 @@
 #define LOWERCASE	1
 #define UNSIGNED	2
 
+#define MINUS 1
+#define PLUS 2
+#define SPACE 4
+#define HASH 8
+#define ZERO 16
+#define UNSI 32
+
+#define SHORT 1
+#define LONG 2
 /**
  * struct parameters - parameters of format
  *
- * @unsign: flag if unsigned value
- * @plus: on if plus specified
- * @minus: on if _flag specified
- * @hashtag: on if _flag specified
- * @zero: on if _flag specified
- * @space: on if hashtag specified
+ * @flag: flag
  * @width: field width specified
  * @precision: field precision specified
  * @h_mod: on if h_mod is specified
@@ -29,7 +33,7 @@
  */
 typedef struct parameters
 {
-	unsigned int unsign;
+	unsigned int flag;
 	unsigned int plus;
 	unsigned int minus;
 	unsigned int hashtag;
@@ -75,7 +79,6 @@ char *get_width(char *s, format_fg *flagPar, va_list agrument);
 char *get_precision(char *p, format_fg *flagPar, va_list agrument);
 char *get_modifier(char *s, format_fg *flagPar);
 int get_specifier(char *s, format_fg *flagPar);
-
 /* print_normalFlags.c module */
 int print_char(va_list agrument, format_fg *flagPar);
 int print_int(va_list agrument, format_fg *flagPar);
@@ -92,8 +95,7 @@ int printRange(char *begin, char *stop, char *except);
 int print_rev(va_list agrument, format_fg *flagPar);
 int print_rot13(va_list agrument, format_fg *flagPar);
 int print_number(char *str, format_fg *flagPar);
-int print_number_right_shift(char *str, format_fg *flagPar);
-int print_number_left_shift(char *str, format_fg *flagPar);
+int printNonMinus(char *str, format_fg *flagPar);
 
 /* _prinf.c module */
 int _printf(const char *format, ...);

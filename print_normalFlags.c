@@ -11,11 +11,11 @@ int print_char(va_list agrument, format_fg *flagPar)
 	unsigned int ch = va_arg(agrument, int);
 	unsigned int width = 1, counter = 0;
 
-	if (flagPar->minus)
+	if ((flagPar->flag & MINUS))
 		counter += _putchar(ch);
 	while (width++ < flagPar->width)
 		counter += _putchar(' ');
-	if (!flagPar->minus)
+	if (!(flagPar->flag & MINUS))
 		counter += _putchar(ch);
 	return (counter);
 }
@@ -58,14 +58,14 @@ int print_string(va_list agrument, format_fg *flagPar)
 	if (flagPar->precision < precision)
 		width = precision = flagPar->precision;
 
-	if (flagPar->minus)
+	if ((flagPar->flag & MINUS))
 	{
 		for (i = 0; i < precision; i++)
 			counter += _putchar(*s++);
 	}
 	while (width++ < flagPar->width)
 		counter += _putchar(' ');
-	if (!flagPar->minus)
+	if (!(flagPar->flag & MINUS))
 	{
 		for (i = 0; i < precision; i++)
 			counter += _putchar(*s++);
@@ -96,7 +96,7 @@ int print_unsigned(va_list agrument, format_fg *flagPar)
 {
 	unsigned long number;
 
-	flagPar->unsign = 1;
+	flagPar->flag |= UNSI;
 	if (flagPar->l_mod)
 		number = (unsigned long)va_arg(agrument, unsigned long);
 	else if (flagPar->h_mod)

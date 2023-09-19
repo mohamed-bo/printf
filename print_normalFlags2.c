@@ -32,7 +32,7 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 	char *hex;
 
 	(void) flagPar;
-	if ((int)(!s))
+	if (s == NULL)
 		return (_putString("(null)"));
 	for (; *s; s++)
 	{
@@ -62,7 +62,8 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 int print_number(char *s, format_fg *flagPar)
 {
 	unsigned int len = _strlen(s);
-	int isNegative = (!flagPar->unsign && *s == '-');
+	int isNegative = (!(flagPar->flag & UNSI) && *s == '-');
+	unsigned int counter = 0, i = _strlen(s);
 
 	if (!flagPar->precision && *s == '0' && !s[1])
 		s = "";
@@ -77,68 +78,13 @@ int print_number(char *s, format_fg *flagPar)
 	if (isNegative)
 		*--s = '-';
 
-	if (!flagPar->minus)
-		return (print_number_right_shift(s, flagPar));
-	else
-		return (print_number_left_shift(s, flagPar));
-}
-
-/**
- * print_number_right_shift - prints a number flag non minus
- * @s: the number
- * @flagPar: the parameter of format
- * Return: number of char printed
- */
-int print_number_right_shift(char *s, format_fg *flagPar)
-{
-	unsigned int n = 0, isNegative, i = _strlen(s);
-	char paddingChar = flagPar->zero ? '0' : ' ';
-	unsigned int signn;
-
-	signn = isNegative = (!flagPar->unsign && *s == '-');
-	if (isNegative && i < flagPar->width && flagPar->zero)
-		s++;
-	else
-		signn = 0;
-	if ((flagPar->plus && !isNegative) ||
-		(!flagPar->plus && flagPar->space && !isNegative))
-		i++;
-	if (signn && flagPar->zero)
-		n += _putchar('-');
-	if (flagPar->plus && !isNegative && flagPar->zero && !flagPar->unsign)
-		n += _putchar('+');
-	else if (!flagPar->plus && flagPar->space && !isNegative &&
-		!flagPar->unsign && flagPar->zero)
-		n += _putchar(' ');
-	while (i++ < flagPar->width)
-		n += _putchar(paddingChar);
-	if (signn && !flagPar->zero)
-		n += _putchar('-');
-	if (flagPar->plus && !isNegative && !flagPar->zero && !flagPar->unsign)
-		n += _putchar('+');
-	else if (!flagPar->plus && flagPar->space && !isNegative &&
-		!flagPar->unsign && !flagPar->zero)
-		n += _putchar(' ');
-	n += _putString(s);
-	return (n);
-}
-
-/**
- * print_number_left_shift - prints a number flag minus
- * @s: the number
- * @flagPar: the parameter of format
- * Return: number of char printed
- */
-int print_number_left_shift(char *s, format_fg *flagPar)
-{
-	unsigned int counter = 0, i = _strlen(s);
-	unsigned int isNegative = (!flagPar->unsign && *s == '-');
-
-	if (!isNegative && !flagPar->unsign)
+	if (!(flagPar->flag & MINUS))
+		return (printNonMinus(s, flagPar));
+	if (!isNegative && !(flagPar->flag & UNSI))
 	{
-	if (flagPar->plus)
+	if ((flagPar->flag & PLUS))
 		counter += _putchar('+'), i++;
-	else if (flagPar->space)
+	else if ((flagPar->flag & SPACE))
 		counter += _putchar(' '), i++;
 	}
 	counter += _putString(s);
@@ -146,3 +92,44 @@ int print_number_left_shift(char *s, format_fg *flagPar)
 		counter += _putchar(' ');
 	return (counter);
 }
+
+/**
+ * printNonMinus - prints a number flag non minus
+ * @s: the number
+ * @flagPar: the parameter of format
+ * Return: number of char printed
+ */
+int printNonMinus(char *s, format_fg *flagPar)
+{
+	unsigned int counter = 0, isNegative, i = _strlen(s);
+	char paddingChar = (flagPar->flag & ZERO) ? '0' : ' ';
+	unsigned int signn;
+
+	signn = isNegative = (!(flagPar->flag & UNSI) && *s == '-');
+	if (isNegative && i < flagPar->width && (flagPar->flag & ZERO))
+		s++;
+	else
+		signn = 0;
+	if (((flagPar->flag & PLUS) && !isNegative) ||
+		(!(flagPar->flag & PLUS) && (flagPar->flag & SPACE) && !isNegative))
+		i++;
+	if (signn && (flagPar->flag & ZERO))
+		counter += _putchar('-');
+	if ((flagPar->flag & PLUS) && !isNegative && (flagPar->flag & ZERO) && !(flagPar->flag & UNSI))
+		counter += _putchar('+');
+	else if (!(flagPar->flag & PLUS) && (flagPar->flag & SPACE) && !isNegative &&
+		!(flagPar->flag & UNSI) && (flagPar->flag & ZERO))
+		counter += _putchar(' ');
+	while (i++ < flagPar->width)
+		counter += _putchar(paddingChar);
+	if (signn && !(flagPar->flag & ZERO))
+		counter += _putchar('-');
+	if ((flagPar->flag & PLUS) && !isNegative && !(flagPar->flag & ZERO) && !(flagPar->flag & UNSI))
+		counter += _putchar('+');
+	else if (!(flagPar->flag & PLUS) && (flagPar->flag & SPACE) && !isNegative &&
+		!(flagPar->flag & UNSI) && !(flagPar->flag & ZERO))
+		counter += _putchar(' ');
+	counter += _putString(s);
+	return (counter);
+}
+
