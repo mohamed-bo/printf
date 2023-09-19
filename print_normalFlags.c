@@ -89,14 +89,9 @@ int print_percent(va_list agrument, format_fg *flagPar)
  */
 int print_unsigned(va_list agrument, format_fg *flagPar)
 {
-	unsigned long number;
+	unsigned long int number = va_arg(agrument, unsigned long int);
 
 	flagPar->flag |= UNSI;
-	if ((flagPar->modifier & LONG))
-		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if ((flagPar->modifier & SHORT))
-		number = (unsigned short int)va_arg(agrument, unsigned int);
-	else
-		number = (unsigned int)va_arg(agrument, unsigned int);
+	number = useModifier(number, flagPar->modifier);
 	return (print_number(convert(number, 10, UNSIGNED), flagPar));
 }
