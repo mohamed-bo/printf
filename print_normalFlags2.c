@@ -32,7 +32,7 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 	char *hex;
 
 	(void) flagPar;
-	if ((int)(!s))
+	if (s == NULL)
 		return (_putString("(null)"));
 	for (; *s; s++)
 	{
@@ -41,8 +41,6 @@ int print_stringNonPrintable(va_list agrument, format_fg *flagPar)
 			counter += _putchar('\\');
 			counter += _putchar('x');
 			hex = convert(*s, 16, 0);
-			if (!hex[1])
-				counter += _putchar('0');
 			counter += _putString(hex);
 		}
 		else
