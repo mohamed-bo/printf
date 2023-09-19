@@ -12,8 +12,7 @@ void init_params(format_fg *flagPar, va_list agruments)
 	flagPar->width = 0;
 	flagPar->precision = UINT_MAX;
 
-	flagPar->h_mod = 0;
-	flagPar->l_mod = 0;
+	flagPar->modifier = 0;
 	flagPar->specifier = NULL;
 	(void)agruments;
 }

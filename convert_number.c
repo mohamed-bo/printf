@@ -31,9 +31,9 @@ int print_oct(va_list agrument, format_fg *flagPar)
 	int counter = 0;
 
 	flagPar->flag |= UNSI;
-	if (flagPar->l_mod)
+	if ((flagPar->modifier & LONG))
 		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if (flagPar->h_mod)
+	else if ((flagPar->modifier & SHORT))
 		number = (unsigned short int)va_arg(agrument, unsigned int);
 	else
 		number = (unsigned int)va_arg(agrument, unsigned int);
@@ -57,9 +57,9 @@ int print_hex(va_list agrument, format_fg *flagPar)
 	char *str;
 
 	flagPar->flag |= UNSI;
-	if (flagPar->l_mod)
+	if ((flagPar->modifier & LONG))
 		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if (flagPar->h_mod)
+	else if ((flagPar->modifier & SHORT))
 		number = (unsigned short int)va_arg(agrument, unsigned int);
 	else
 		number = (unsigned int)va_arg(agrument, unsigned int);
@@ -87,9 +87,9 @@ int print_HEX(va_list agrument, format_fg *flagPar)
 	char *str;
 
 	flagPar->flag |= UNSI;
-	if (flagPar->l_mod)
+	if ((flagPar->modifier & LONG))
 		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if (flagPar->h_mod)
+	else if ((flagPar->modifier & SHORT))
 		number = (unsigned short int)va_arg(agrument, unsigned int);
 	else
 		number = (unsigned int)va_arg(agrument, unsigned int);

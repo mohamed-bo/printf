@@ -30,9 +30,9 @@ int print_int(va_list agrument, format_fg *flagPar)
 {
 	long number;
 
-	if (flagPar->l_mod)
+	if ((flagPar->modifier & LONG))
 		number = va_arg(agrument, long);
-	else if (flagPar->h_mod)
+	else if ((flagPar->modifier & SHORT))
 		number = (short int)va_arg(agrument, int);
 	else
 		number = (int)va_arg(agrument, int);
@@ -97,9 +97,9 @@ int print_unsigned(va_list agrument, format_fg *flagPar)
 	unsigned long number;
 
 	flagPar->flag |= UNSI;
-	if (flagPar->l_mod)
+	if ((flagPar->modifier & LONG))
 		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if (flagPar->h_mod)
+	else if ((flagPar->modifier & SHORT))
 		number = (unsigned short int)va_arg(agrument, unsigned int);
 	else
 		number = (unsigned int)va_arg(agrument, unsigned int);

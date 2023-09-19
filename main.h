@@ -27,22 +27,16 @@
  * @flag: flag
  * @width: field width specified
  * @precision: field precision specified
- * @h_mod: on if h_mod is specified
+ * @modifier: on if h_mod is specified
  * @l_mod: on if l_mod is specified
  * @specifier: function of specifier
  */
 typedef struct parameters
 {
 	unsigned int flag;
-	unsigned int plus;
-	unsigned int minus;
-	unsigned int hashtag;
-	unsigned int zero;
-	unsigned int space;
 	unsigned int width;
 	unsigned int precision;
-	unsigned int h_mod;
-	unsigned int l_mod;
+	unsigned int modifier;
 	int (*specifier)(va_list agrument, struct parameters *flagPar);
 } format_fg;
 
@@ -70,7 +64,7 @@ int print_HEX(va_list agrument, format_fg *flagPar);
 
 /* convert.c module */
 char *convert(long int num, int base, int flags);
-
+long int useModifier(unsigned long int num, int m_type);
 /* flag.c module */
 void init_params(format_fg *flagPar, va_list agruments);
 char *get_flag_param(char *s, format_fg *flagPar, va_list agruments);

@@ -11,11 +11,11 @@ char *get_modifier(char *s, format_fg *flagPar)
 	switch (*s)
 	{
 	case 'h':
-		flagPar->h_mod = 1;
+		flagPar->modifier |= SHORT;
 		s++;
 		break;
 	case 'l':
-		flagPar->l_mod = 1;
+		flagPar->modifier |= LONG;
 		s++;
 		break;
 	}
@@ -60,4 +60,21 @@ int get_specifier(char *s, format_fg *flagPar)
 		i++;
 	}
 	return (0);
+}
+
+/**
+ * useModifier - useModifier
+ * @num: number
+ * @m_type: Number indicating the type to be casted
+ *
+ * Return: casted value
+ */
+long int useModifier(unsigned long int num, int m_type)
+{
+	if (m_type == LONG)
+		return (num);
+	else if (m_type == SHORT)
+		return ((unsigned short)num);
+
+	return ((unsigned int)num);
 }
