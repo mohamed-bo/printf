@@ -28,14 +28,9 @@ int print_char(va_list agrument, format_fg *flagPar)
  */
 int print_int(va_list agrument, format_fg *flagPar)
 {
-	long number;
+	unsigned long int number = va_arg(agrument, unsigned long int);
 
-	if ((flagPar->modifier & LONG))
-		number = va_arg(agrument, long);
-	else if ((flagPar->modifier & SHORT))
-		number = (short int)va_arg(agrument, int);
-	else
-		number = (int)va_arg(agrument, int);
+	number = useModifier(number, flagPar->modifier);
 	return (print_number(convert(number, 10, 0), flagPar));
 }
 

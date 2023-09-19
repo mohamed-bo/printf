@@ -26,17 +26,12 @@ int print_bin(va_list agrument, format_fg *flagPar)
  */
 int print_oct(va_list agrument, format_fg *flagPar)
 {
-	unsigned long number;
+	unsigned long int number = va_arg(agrument, unsigned long int);
 	char *str;
 	int counter = 0;
 
 	flagPar->flag |= UNSI;
-	if ((flagPar->modifier & LONG))
-		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if ((flagPar->modifier & SHORT))
-		number = (unsigned short int)va_arg(agrument, unsigned int);
-	else
-		number = (unsigned int)va_arg(agrument, unsigned int);
+	number = useModifier(number, flagPar->modifier);
 	str = convert(number, 8, UNSIGNED);
 
 	if ((flagPar->flag & HASH) && number)
@@ -52,17 +47,12 @@ int print_oct(va_list agrument, format_fg *flagPar)
  */
 int print_hex(va_list agrument, format_fg *flagPar)
 {
-	unsigned long number;
+	unsigned long int number = va_arg(agrument, unsigned long int);
 	int counter = 0;
 	char *str;
 
 	flagPar->flag |= UNSI;
-	if ((flagPar->modifier & LONG))
-		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if ((flagPar->modifier & SHORT))
-		number = (unsigned short int)va_arg(agrument, unsigned int);
-	else
-		number = (unsigned int)va_arg(agrument, unsigned int);
+	number = useModifier(number, flagPar->modifier);
 
 	str = convert(number, 16, UNSIGNED | LOWERCASE);
 	if (number && (flagPar->flag & HASH))
@@ -82,17 +72,12 @@ int print_hex(va_list agrument, format_fg *flagPar)
  */
 int print_HEX(va_list agrument, format_fg *flagPar)
 {
-	unsigned long number;
+	unsigned long int number = va_arg(agrument, unsigned long int);
 	int counter = 0;
 	char *str;
 
 	flagPar->flag |= UNSI;
-	if ((flagPar->modifier & LONG))
-		number = (unsigned long)va_arg(agrument, unsigned long);
-	else if ((flagPar->modifier & SHORT))
-		number = (unsigned short int)va_arg(agrument, unsigned int);
-	else
-		number = (unsigned int)va_arg(agrument, unsigned int);
+	number = useModifier(number, flagPar->modifier);
 
 	str = convert(number, 16, UNSIGNED);
 	if ((flagPar->flag & HASH) && number)
